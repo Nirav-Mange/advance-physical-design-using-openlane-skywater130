@@ -114,8 +114,29 @@ Inside this `runs` folder we see different files for each new run of openlane a 
 
 ![Openlane_interactive_flow](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/dAY1/inside_runs_folder.JPG)
 
-A merged file is created during the merging operation in the pircorv32a design preparation (it merges lef and techlef files)
+A merged file is created during the merging operation in the pircorv32a design preparation (it merges lef and techlef files). this file is found in `tmp` folder.
 
+![Openlane_interactive_flow](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/dAY1/merged_lef.JPG)
+
+Next, we run the synthesis of picorv32a design in the openlane interactive terminal:
+`run_synthesis`
+
+![Openlane_interactive_flow](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/dAY1/Run_synthesis.JPG)
+
+The yosys and ABC tools are utilised to convert RTL to gate level netlist
+
+![Openlane_interactive_flow](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/dAY1/picorv32a_statistics.JPG)
+
+Calcuation of Flop Ratio:
+```
+Flop ratio = Number of D Flip flops 
+             ______________________
+             Total Number of cells
+```
+
+#### Characterize synthesis results
+
+After the `run_synthesis` has run successfully we will see the synthesized file in the synthesis folder with `design_name.synthesis.v`
 
 
 
