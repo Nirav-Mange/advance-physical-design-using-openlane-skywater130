@@ -87,7 +87,13 @@ Circuit validity checker | [CVC](https://github.com/d-m-bailey/cvc)
 
 #### Invoking Docker
 
-To invoke Openlane you should be in ` /openlane_working_dir/openlane `
+To invoke Openlane you should be in ` /openlane_working_dir/openlane ` and use `docker` command. After docker has been invoked we have to start the interactive session. `flow.tcl` is a script that specifies details for openLANE flow.
+
+```
+docker
+./flow.tcl -interactive
+package require openlane 0.9
+```
 
 
 
