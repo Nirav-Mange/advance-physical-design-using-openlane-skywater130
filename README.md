@@ -461,7 +461,7 @@ sta pre_sta.conf
 
 ![sta_pre_sta_conf](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%204/pre_sta_conf_2.JPG)
 
-![sta_pre_sta_conf_analysis](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%204/pre_sta_conf_analysis.JPG)
+![sta_pre_sta_conf_analysis](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%204/pre_sta_conf_anaylsis.JPG)
 
 Since clock tree synthesis has not been performed yet, the analysis is with respect to ideal clocks and only setup time slack is taken into consideration. The slack value is the difference between data required time and data arrival time. The worst slack value must be greater than or equal to zero. If a negative slack is obtained, following steps may be followed:
 1. Change synthesis buffering and synthesis sizing values 
