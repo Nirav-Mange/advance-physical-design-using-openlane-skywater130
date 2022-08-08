@@ -138,6 +138,84 @@ Flop ratio = Number of D Flip flops
 
 After the `run_synthesis` has run successfully we will see the synthesized file in the synthesis folder with `design_name.synthesis.v`
 
+![Openlane_interactive_flow](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/dAY1/synthesis_file.JPG)
+
+# Day 2 : Chip Floorplanning and introduction to library cells
+
+- Chip floor planning : Partition of chip die between different building blocks & place the I/O pads
+- Macro floor planning : It consist of dimensions, pin locations, rows definition...
+
+
+
+## Chip floor planning considerations
+
+### Utilization factor and aspect ratio
+
+Utilization factor and aspect ratio are two important factors which are defined as 
+
+```
+Utilisation Factor =  Area occupied by netlist
+                     __________________________
+                        Total area of core
+```
+
+```
+Aspect Ratio =  Height
+               ________
+                Width
+```
+
+A Utilisation Factor of 1 signifies 100% utilisation leaving no space for extra cells such as buffer. However, practically, the Utilisation Factor is 0.5-0.6. Likewise, an Aspect ratio of 1 implies that the chip is square shaped. Any value other than 1 implies rectanglular chip.
+
+#### Pre-placed cells
+
+- The arrangement of different IP's in a chip is referred as floor planning.
+- These Ip's/blocks have user defined locations and hence are placed in chip before automated placement and routing and are called _pre-placed cells_.
+- Automated PnR tools places the remaining logical cells in the design onto a chip.
+
+#### Decoupling capacitors
+
+Pre-placed cells must then be surrounded with decoupling capacitors (decaps). The resistances and capacitances associated with long wire lengths can cause the power supply voltage to drop significantly before reaching the logic circuits. This can lead to the signal value entering into the undefined region, outside the noise margin range.  Decaps are huge capacitors charged to power supply voltage and placed close the logic circuit. Their role is to decouple the circuit from power supply by supplying the necessary amount of current to the circuit. They pervent crosstalk and enable local communication.
+
+
+#### Power Planning
+
+Each block on the chip, however, cannot have its own decap unlike the pre-placed macros. Therefore a good power planning ensures that each block has its own VDD and VSS pads connected to the horizontal and vertical power and GND lines which form a power mesh.
+
+#### Pin Placement
+
+The netlist defines connectivity between logic gates. The place between the core and die is utilised for placing pins. The connectivity information coded in either VHDL or Verilog is used to determine the position of I/O pads of various pins. Then, logical placement blocking of pre-placed macros is performed so as to differentiate that area from that of the pin area.
+
+#### Floorplan run on OpenLANE & view in Magic
+
+Files of importance in increasing priority order:
+1. ```floorplan.tcl``` - System default envrionment variables
+2. ```conifg.tcl```
+3. ```sky130A_sky130_fd_sc_hd_config.tcl```
+
+Floorplan envrionment variables or switches:
+1. ```FP_CORE_UTIL``` - floorplan core utilisation
+2. ```FP_ASPECT_RATIO``` - floorplan aspect ratio
+3. ```FP_CORE_MARGIN``` - Core to die margin area
+4. ```FP_IO_MODE``` - defines pin configurations (1 = equidistant/0 = not equidistant)
+5. ```FP_CORE_VMETAL``` - vertical metal layer
+6. ```FP_CORE_HMETAL``` - horizontal metal layer
+
+***Note: Usually, vertical metal layer and horizontal metal layer values will be 1 more than that specified in the files***
+
+To run the picorv32a floorplan in openLANE:
+ ```
+ run_floorplan
+ 
+ ```
+ ![Openlane_interactive_flow](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%2/run_floorplan.JPG)
+ 
+ Post the floorplan run, a .def file will have been created within the `results/floorplan` directory. We may review floorplan files by checking the `floorplan.tcl`. The system defaults will have been overriden by switches set in `conifg.tcl` and further overriden by switches set in `sky130A_sky130_fd_sc_hd_config.tcl` .
+ 
+ 
+
+
+
 
 
 
