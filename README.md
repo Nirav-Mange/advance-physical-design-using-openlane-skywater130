@@ -213,9 +213,128 @@ To run the picorv32a floorplan in openLANE:
  
  Post the floorplan run, a .def file will have been created within the `results/floorplan` directory. We may review floorplan files by checking the `floorplan.tcl`. The system defaults will have been overriden by switches set in `conifg.tcl` and further overriden by switches set in `sky130A_sky130_fd_sc_hd_config.tcl` .
  
- 
+To view the floorplan, Magic is invoked after moving to the `results/floorplan` directory: 
+```
+magic -T /home/niravmange/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &
+
+```
+![Openlane_interactive_flow](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%202/magic_layout.JPG)]
+
+One can zoom into Magic layout by selecting an area with left and right mouse clcik followed by pressing "z" key. Here, equidistant input pins (FP_IO_MODE = 1) can be viewed:
+
+![Openlane_interactive_flow](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%202/magic_layout_after_command.JPG)]
+
+when (FP_IO_MODE = 0)
+![Openlane_interactive_flow](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%202/pin&decoupling&20capacitor.JPG)]
+
+### Placement
+
+#### Placement Optimization
 
 
+The next step in the OpenLANE ASIC flow is placement. The synthesized netlist is the be placed on the floorplan. Placement is perfomed in 2 stages:
+
+1. Global Placement: It finds optimal position for all cells which may not be legal and cells may overlap. Optimization is done through reduction of half parameter wire length
+2. Detailed Placement: It alters the position of cells post global placement so as to legalise them
+
+Legalisation of cells is important from timing point of view. 
+
+#### Placement run on OpenLANE & view in Magic
+
+Congestion aware placement using RePIAce:
+
+```
+run_placement
+
+```
+The objective of placement is the convergence of overflow value. If overflow value progressively reduces during the placement run it implies that the design will converge and placement will be successful. Post placement, the design can be viewed on magic within ```results/placement``` directory:
+
+```
+magic -T /home/niravmange/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+
+```
+![Layout_after_placcement](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%202/after_placement.JPG)]
+
+***Note: Power distribution network generation is usually a part of the floorplan step. However, in the openLANE flow, floorplan does not generate PDN. The steps are - floorplan, placement CTS and then PDN***
+
+### Standard Cell Design Flow
+
+Standard cell design flow involves the following:
+1. Inputs: PDKs, DRC & LVS rules, SPICE models, libraries, user-defined specifications 
+2. Design steps: Circuit design, Layout design (Art of layout Euler's path and stick diagram), Extraction of parasitics, Characterization (timing, noise, power)
+3. Outputs: CDL (circuit description language), LEF, GDSII, extracted SPICE netlist (.cir), timing, noise and power .lib files
+
+### Timing Parameter Definitions
+
+Timing defintion | Value
+------------ | -------------
+slew_low_rise_thr  | 20% value
+slew_high_rise_thr |  80% value
+slew_low_fall_thr | 20% value
+slew_high_fall_thr | 80% value
+in_rise_thr | 50% value
+in_fall_thr | 50% value
+out_rise_thr | 50% value
+out_fall_thr | 50% value
+
+
+```
+rise delay =  time(out_fall_thr) - time(in_rise_thr)
+
+Fall transition time: time(slew_high_fall_thr) - time(slew_low_fall_thr)
+
+Rise transition time: time(slew_high_rise_thr) - time(slew_low_rise_thr)
+```
+
+A poor choice of threshold points leads to negative delay value. Therefore a correct choice of thresholds is very important.
+
+## Day 3: Design library cell using Magic Layout and ngspice charaterization.
+
+- You can set the parameter on the flow by just copy & pasting the command from `floorplan.tcl` file.
+
+### SPICE Deck creation & Simulation
+
+A SPICE deck includes information about the following:
+1. Model description
+2. Netlist description
+3. Component connectivity
+4. Component values
+5. Capacitance load
+6. Nodes
+7. Simulation type and parameters
+8. Libraries included
+
+### CMOS inverter Switching Threshold Vm
+
+Thw switching threshold of a CMOS inverter is the point on the transfer characteristic where Vin equals Vout (=Vm). At this point both PMOS and NOMOS are in ON state which gives rise to a leakage current
+
+### 16 Mask CMOS Fabrication
+The 16-mask CMOS process consists of the following steps:
+1. Selection of subtrate: Secting the body/substrate material
+2. Creating active region for transistors: Isolation between active region pockets by SiO2 and Si3N4 deposition followed by photolithography and etching
+3. N-well and P-well formation: Ion implanation by Boron for P-well and by Phosphorous for N-well formation
+4. Formation of gate terminal: NMOS and PMOS gates formed by photolithography techniques
+5. LDD (lightly doped drain) formation: LDD formed to prevent hot electron effect
+6. Source & drain formation: Screen oxide added to avoid channelling during implants followed by Aresenic implantation and annealing
+7. Local interconnect formation: Removal of screen oxide by HF etching. Deposition of Ti for low resistant contacts
+8. Higher level metal formation: CMP for planarization followed by TiN and Tungsten deposition. Top SiN layer for chip protection
+
+### Inverter Standard cell Layout & SPICE extraction
+
+The Magic layout of a CMOS inverter will be used so as to intergate the inverter with the picorv32a design. To do this, inverter magic file is sourced from [vsdstdcelldesign](https://github.com/nickson-jose/vsdstdcelldesign) by cloning it within the ```openlane_working_dir/openlane``` directory as follows:
+
+```
+git clone https://github.com/nickson-jose/vsdstdcelldesign
+```
+![git_clone](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%203/Git_clone_stdcell.JPG)]
+
+This creates a vsdstdcelldesign named folder in the openlane directory. The repo's contents after cloning appear as follows:
+
+![vsdstdcell_dir](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%203/vsdstdcell.JPG)]
+
+To invoke magic to view the ```sky130_inv.mag``` file, the sky130A.tech file must be included in the command along with its path. To ease up the complexity of this command, the tech file can be copied from the magic folder to the vsdstdcelldesign folder.
+
+![Loading_inv_cell](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%203/Loading_inv_design_using_magic.JPG)]
 
 
 
