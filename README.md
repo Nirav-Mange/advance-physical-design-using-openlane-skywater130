@@ -481,8 +481,7 @@ The CTS run adds clock buffers in therefore buffer delays come into picture and 
 openroad
 
 ```
-
-![Openroad](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%204/Open_road_command.JPG)
+![Openroad](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%204/Open_road_commands.JPG)
 ```
 read DEF /openLANE_flow/designs/picorv32a/runs/06-08_17-28/results/cts/picorv32a-cts.def
 ```
@@ -506,7 +505,7 @@ read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
 set_propagated_clock (all_clocks)
 report_checks -path_delay min_max -format full_clock_expanded -digits 4
 ```
-![set_propagated_clocks](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%204/set_propagated_clocks.JPG)
+![set_propagated_clocks](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%204/set_propogated_clocks.JPG)
 
 Slack at the end of STA for typical corner:
 
