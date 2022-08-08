@@ -106,8 +106,18 @@ The project is based on reference SoC Picorv32a which utilizes RISCV-ISA. there 
  
 #### Review of design files
 
-A "runs" folder is generated within the picorv32a folder
-.
+A "runs" folder is generated within the picorv32a folder.
+
+![Openlane_interactive_flow](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/dAY1/runs_folder.JPG)
+
+Inside this `runs` folder we see different files for each new run of openlane a different folder is created it in cludes the date on which openlane was run.
+
+![Openlane_interactive_flow](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/dAY1/inside_runs_folder.JPG)
+
+A merged file is created during the merging operation in the pircorv32a design preparation (it merges lef and techlef files)
+
+
+
 
 
 
