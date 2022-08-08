@@ -336,9 +336,32 @@ To invoke magic to view the ```sky130_inv.mag``` file, the sky130A.tech file mus
 
 ![Loading_inv_cell](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%203/Loading_inv_design_using_magic.JPG)]
 
+The sky130_inv.mag file can then be invoked in Magic very easily:
+```
+magic -T sky130A.tech sky130_inv.mag &
+```
+![inv_layout](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%203/SKY130_inv.JPG)]
 
+In Sky130 the first layer is called the local interconnect layer or Locali
+To verify whether the layout is that of CMOS inverter, verification of P-diffusiona nd N-diffusion regions with Polysilicon can be observed:
+![inv_layout](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%203/pmos.JPG)]
 
+Other verification steps are to check drain and source connections. The drains of both PMOS and NMOS must be connected to output port  (Y) and the sources of both must be connected to power supply VDD VPWR.
 
+**LEF or library exchange format:**
+A format that tells us about cell boundaries, VDD and GND lines. It contains no info about the logic of circuit and is also used to protect the IP.
+
+**SPICE extraction:**
+Within the Magic environment, following commands are used in tkcon to achieve .mag to .spice extraction:
+```
+extract all
+ext2spice cthresh 0 rethresh 0
+ext2spice
+```
+
+This generates the ```sky130_in.spice``` file as shown above.
+
+![extracted_spice](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/Day%203/Spice_extracted_from_magic.JPG)]
 
 
 
