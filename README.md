@@ -94,7 +94,7 @@ docker
 ./flow.tcl -interactive
 package require openlane 0.9
 ```
-
+![Openlane_package](/PHYSICAL DESIGN WORKSHOP/dAY1/Openlane_package)
 
 
 
