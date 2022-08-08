@@ -87,7 +87,7 @@ Circuit validity checker | [CVC](https://github.com/d-m-bailey/cvc)
 
 #### Invoking Docker
 
-To invoke Openlane you should be in ´´´ /openlane_working_dir/openlane ´´´
+To invoke Openlane you should be in ` /openlane_working_dir/openlane `
 
 
 
