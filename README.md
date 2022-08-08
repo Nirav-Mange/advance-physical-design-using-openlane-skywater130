@@ -96,6 +96,19 @@ package require openlane 0.9
 ```
 ![Openlane_interactive_flow](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/dAY1/Openlane_package.JPG)
 
+#### Design preparation step
+
+The project is based on reference SoC Picorv32a which utilizes RISCV-ISA. there are various packages which needs to initialize and prep for the design and is done with the following command.
+ ```
+ prep -design picorv32a
+ ```
+ ![Openlane_interactive_flow](https://github.com/Nirav-Mange/advance-physical-design-using-openlane-skywater130/blob/main/PHYSICAL%20DESIGN%20WORKSHOP/dAY1/Design_prep.JPG)
+ 
+#### Review of design files
+
+A "runs" folder is generated within the picorv32a folder
+.
+
 
 
 
